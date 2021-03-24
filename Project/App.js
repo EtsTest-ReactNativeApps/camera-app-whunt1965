@@ -9,9 +9,9 @@
 // React Native Counter Example using Hooks!
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, FlatList, Dimensions } from 'react-native';
+import { View, Text, Button, StyleSheet, FlatList, Dimensions, SafeAreaView, TouchableHighlight, Image } from 'react-native';
 import MapView from 'react-native-maps';
-import 'react-native-camera'
+import Camera from './components/Camera';
 
 
 const App = () => {
@@ -22,6 +22,15 @@ const App = () => {
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   });
+  const [img, setImg] = useState(null);
+
+  function onPicture({uri}) {
+    setImg(uri);
+  }
+
+  function onBackToCamera() {
+    setImg(null);
+  }
   
   const onRegionChange = ({region}) => setRegion(region);
 
@@ -42,15 +51,8 @@ const App = () => {
       });
   }, [])
 
-  takePicture = async () => {
-    if (this.camera) {
-      const data = await this.camera.takePictureAsync();
-      console.warn('takePictureResponse ', data);
-    }
-  };
-
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.text}>
       <Text>You clicked {count} times</Text>
       <Button
@@ -58,12 +60,18 @@ const App = () => {
         title="Click me!"
       />
       </View>
-      <View style={styles.cam}>
-      <Text style={styles.text2}>Take a Picture</Text>
-      <Button
-        onPress={() => takePicture()}
-        title="Snap!"
-      />
+      <View style = {{flex: 2}}>
+      {img ? (
+          <TouchableHighlight
+            style={{flex: 1}}
+            onPress={() => {
+              onBackToCamera();
+            }}>
+            <Image source={{uri: img}} style={{flex: 1}} />
+          </TouchableHighlight>
+        ) : (
+          <Camera onPicture={onPicture} />
+        )}
       </View>
       <MapView
         style={styles.map}
@@ -71,7 +79,7 @@ const App = () => {
         onRegionChange={onRegionChange}
         showsUserLocation={true} 
       />
-    </View>
+    </SafeAreaView>
 
   );
 };
