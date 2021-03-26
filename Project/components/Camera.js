@@ -2,16 +2,25 @@
 
 import React, {PureComponent} from 'react';
 import {RNCamera} from 'react-native-camera';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import {TouchableOpacity, Alert, StyleSheet, Button, Text, Dimensions,} from 'react-native';
+import {AppRegistry, TouchableOpacity, Alert, StyleSheet, Button, Text, Dimensions,} from 'react-native';
 
 export default class Camera extends PureComponent {
+  _isMounted = false;
   constructor(props) {
     super(props);
       this.state = {
       takingPic: false,
     };
   }
+
+  componentDidMount(){
+    this._isMounted = true;
+  }
+
+  componentWillUnmount(){
+    this._isMounted = false;
+  }
+
   takePicture = async () => {
     if (this.camera && !this.state.takingPic) {
 
@@ -25,7 +34,7 @@ export default class Camera extends PureComponent {
 
       try {
          const data = await this.camera.takePictureAsync(options);
-         Alert.alert('Success', JSON.stringify(data));
+         this.props.onPicture(data);
       } catch (err) {
         Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));
         return;
@@ -73,4 +82,6 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
 });
+
+AppRegistry.registerComponent('App', () => Camera)
  
