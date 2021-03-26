@@ -1,8 +1,8 @@
 // Source Referenced - https://www.fullstacklabs.co/blog/react-native-camera
-
+import 'react-native-gesture-handler';
 import React, {PureComponent} from 'react';
 import {RNCamera} from 'react-native-camera';
-import {AppRegistry, TouchableOpacity, Alert, StyleSheet, Button, Text, Dimensions,} from 'react-native';
+import {View, AppRegistry, TouchableOpacity, Alert, StyleSheet, Button, Text, Dimensions, TouchableHighlight, Image} from 'react-native';
 
 export default class Camera extends PureComponent {
   _isMounted = false;
@@ -10,6 +10,7 @@ export default class Camera extends PureComponent {
     super(props);
       this.state = {
       takingPic: false,
+      img: null
     };
   }
 
@@ -19,6 +20,19 @@ export default class Camera extends PureComponent {
 
   componentWillUnmount(){
     this._isMounted = false;
+  }
+
+  onPicture({uri}) {
+    this.setImg(uri);
+    this.props.navigation.navigate('Image', {image : uri})
+    // this.setImg(uri);
+  }
+  onBackToCamera() {
+    this.setImg(null);
+  }
+
+  setImg(uri){
+    this.img = uri;
   }
 
   takePicture = async () => {
@@ -34,7 +48,7 @@ export default class Camera extends PureComponent {
 
       try {
          const data = await this.camera.takePictureAsync(options);
-         this.props.onPicture(data);
+         this.onPicture(data);
       } catch (err) {
         Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));
         return;
@@ -43,9 +57,9 @@ export default class Camera extends PureComponent {
       }
     }
   };
-
   render(){
     return(
+      <View style = {{flex: 2}}>
       <RNCamera
         ref = {ref => {
           this.camera = ref;
@@ -63,13 +77,49 @@ export default class Camera extends PureComponent {
           activeOpacity={.5}
           style={styles.btnAlignment}
           onPress={this.takePicture}>
-          {/* <Icon name="camera" size={50} color="#fff" /> */}
           <Button title="camera" flex={2} color="red" />
         </TouchableOpacity>
       </RNCamera>
+      </View>
     );
   }
 }
+
+//   render(){
+//     return(
+//       <View style = {{flex: 2}}>
+//       {this.img ? (
+//         <TouchableHighlight
+//           style={{flex: 1}}>
+//           <Image source={{uri: this.img}} style={{flex: 2}} />
+//         </TouchableHighlight>
+//       ) : (
+//       <RNCamera
+//         ref = {ref => {
+//           this.camera = ref;
+//         }}
+//         captureAudio={false}
+//         style={{flex: 1}}
+//         type={RNCamera.Constants.Type.back}
+//         androidCameraPermissionOptions={{
+//           title: 'Permission to use camera',
+//           message: 'We need your permission to use your camera',
+//           buttonPositive: 'Ok',
+//           buttonNegative: 'Cancel',
+//         }}>
+//         <TouchableOpacity
+//           activeOpacity={.5}
+//           style={styles.btnAlignment}
+//           onPress={this.takePicture}>
+//           {/* <Icon name="camera" size={50} color="#fff" /> */}
+//           <Button title="camera" flex={2} color="red" />
+//         </TouchableOpacity>
+//       </RNCamera>
+//       )}
+//       </View>
+//     );
+//   }
+// }
 
 const styles = StyleSheet.create({
   btnAlignment: {
@@ -77,7 +127,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    // marginBottom: 20,
+    marginBottom: 20,
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },

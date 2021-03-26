@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Camera from './components/Camera'
 import Map from './components/Map'
+import myImage from './components/Image'
 
 
 function HomeScreen({ navigation }) {
@@ -49,6 +50,7 @@ function App() {
         <Stack.Screen name="Details" component={DetailsScreen} />
         <Stack.Screen name="Camera" component={Camera} />
         <Stack.Screen name="Map" component={Map} />
+        <Stack.Screen name="Image" component={myImage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
