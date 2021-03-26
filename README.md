@@ -29,14 +29,14 @@ To add a map, I used the [react-native-maps](https://github.com/react-native-map
 
 A snapshot of the map displaying on my ugly homescreen is included below (screenshot from my iPhone):
 
-![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase2.png)
+![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase3.jpg)
 
 ### Phase 4 - Develop use case to take a picture 
 To add a camera feature, I used the [react-native-camera](https://github.com/react-native-camera/react-native-camera) library and followed [this tutorial](https://www.fullstacklabs.co/blog/react-native-camera). Currently, I am able to take a picture, but am still working on the backend to have this picture save. 
 
 A snapshot of the camera displaying on my ugly homescreen is included below (screenshot from my iPhone):
 
-![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase2.png)
+![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase4.jpg)
 
 ### Phase 5 - SetUp Firebase
 TODO
