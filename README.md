@@ -15,14 +15,10 @@ In this phase, we set up an environment to build and run a REACT native applicat
 
 After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
 
-![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase1.png)
-
 ### Phase 2 - Go through REACT Native Tutorial
 In this phase, we completed a simple [tutorial](https://reactnative.dev/docs/tutorial) to create a REACT native application that can record the number of times a button is pressed.
 
 After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
-
-![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase2.png)
 
 ### Phase 3 - Develop Use Case to Display a Map
 TODO

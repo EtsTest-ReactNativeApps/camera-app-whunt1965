@@ -12,16 +12,17 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Button, StyleSheet, FlatList, Dimensions, SafeAreaView, TouchableHighlight, Image } from 'react-native';
 import MapView from 'react-native-maps';
 import Camera from './components/Camera';
+// import Map from './components/Map';
 
 
 const App = () => {
   const [count, setCount] = useState(0);
-  const [region, setRegion] = useState({
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+  // const [region, setRegion] = useState({
+  //   latitude: 37.78825,
+  //   longitude: -122.4324,
+  //   latitudeDelta: 0.0922,
+  //   longitudeDelta: 0.0421,
+  // });
   const [img, setImg] = useState(null);
 
   function onPicture({uri}) {
@@ -32,24 +33,24 @@ const App = () => {
     setImg(null);
   }
   
-  const onRegionChange = ({region}) => setRegion(region);
+  // const onRegionChange = ({region}) => setRegion(region);
 
-  useEffect(() => {
-    const geo =navigator.geolocation;
-    if(!geo){
-      console.log("Couldn't get geolocation")
-      return;
-    }
-    navigator.geolocation.watchPosition(
-      (position) => {
-          console.log("wokeeey");
-          console.log(position);
-          setRegion({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          })
-      });
-  }, [])
+  // useEffect(() => {
+  //   const geo =navigator.geolocation;
+  //   if(!geo){
+  //     console.log("Couldn't get geolocation")
+  //     return;
+  //   }
+  //   navigator.geolocation.watchPosition(
+  //     (position) => {
+  //         console.log("wokeeey");
+  //         console.log(position);
+  //         setRegion({
+  //           latitude: position.coords.latitude,
+  //           longitude: position.coords.longitude,
+  //         })
+  //     });
+  // }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -73,12 +74,20 @@ const App = () => {
           <Camera onPicture={onPicture} />
         )}
       </View>
+      <View style = {{flex: 2}}>
+      {/* <Map/> */}
       <MapView
         style={styles.map}
-        region={region}
-        onRegionChange={onRegionChange}
-        showsUserLocation={true} 
+        showsUserLocation
+        followUserLocation
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
       />
+     </View>
     </SafeAreaView>
 
   );
