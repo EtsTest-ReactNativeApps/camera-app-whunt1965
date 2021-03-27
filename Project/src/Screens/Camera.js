@@ -2,7 +2,8 @@
 import 'react-native-gesture-handler';
 import React, {PureComponent} from 'react';
 import {RNCamera} from 'react-native-camera';
-import {View, AppRegistry, TouchableOpacity, Alert, StyleSheet, Button, Text, Dimensions, TouchableHighlight, Image} from 'react-native';
+import {View, AppRegistry,Alert, StyleSheet, Dimensions,} from 'react-native';
+import FormButton from '../style/FormButton';
 
 export default class Camera extends PureComponent {
   _isMounted = false;
@@ -73,53 +74,17 @@ export default class Camera extends PureComponent {
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
         }}>
-        <TouchableOpacity
-          activeOpacity={.5}
-          style={styles.btnAlignment}
-          onPress={this.takePicture}>
-          <Button title="camera" flex={2} color="red" />
-        </TouchableOpacity>
+        <View style={styles.btnAlignment}>
+          <FormButton
+            buttonTitle="Snap!" 
+            onPress={this.takePicture}
+            />
+          </View>
       </RNCamera>
       </View>
     );
   }
 }
-
-//   render(){
-//     return(
-//       <View style = {{flex: 2}}>
-//       {this.img ? (
-//         <TouchableHighlight
-//           style={{flex: 1}}>
-//           <Image source={{uri: this.img}} style={{flex: 2}} />
-//         </TouchableHighlight>
-//       ) : (
-//       <RNCamera
-//         ref = {ref => {
-//           this.camera = ref;
-//         }}
-//         captureAudio={false}
-//         style={{flex: 1}}
-//         type={RNCamera.Constants.Type.back}
-//         androidCameraPermissionOptions={{
-//           title: 'Permission to use camera',
-//           message: 'We need your permission to use your camera',
-//           buttonPositive: 'Ok',
-//           buttonNegative: 'Cancel',
-//         }}>
-//         <TouchableOpacity
-//           activeOpacity={.5}
-//           style={styles.btnAlignment}
-//           onPress={this.takePicture}>
-//           {/* <Icon name="camera" size={50} color="#fff" /> */}
-//           <Button title="camera" flex={2} color="red" />
-//         </TouchableOpacity>
-//       </RNCamera>
-//       )}
-//       </View>
-//     );
-//   }
-// }
 
 const styles = StyleSheet.create({
   btnAlignment: {
