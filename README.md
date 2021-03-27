@@ -51,9 +51,11 @@ Below, please find some photos of my slighly prettier (but still ugly!) app with
 </p>
 
 ### Phase 5 - SetUp Firebase
-TODO
+In Phase 5, I set up and connected my application to Firebase. To do so, I followed a couple different tutorials including this [tutorial](https://www.instamobile.io/mobile-development/react-native-firebase-storage/) on uploading images to Firebase. In addition, because I needed an authorization mechanism to upload images from the app to Firebase, I followed this other [tutorial](https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/) on implementing sign/login mechanisms to verify a user with Firebase. Admittedly, this led to a lot of restructuring of my App, but ultimately it makes it much more extensible (and I used a few of the styles as well that this tutorial provided).
 
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
+Rather than upload a bunch of photos of the app, I recorded the below video of the app running on my phone and uploading a photo to Firebase. 
+
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase5_demo.mp4)
 
 ### Phase 6 - Store cloud data in the cloud and display as list on the phone
 TODO
