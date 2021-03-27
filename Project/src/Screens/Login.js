@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    fontSize: 24,
+    fontSize: 20,
     marginBottom: 10
   },
   navButton: {

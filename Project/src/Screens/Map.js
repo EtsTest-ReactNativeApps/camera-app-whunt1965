@@ -1,89 +1,47 @@
 
-import React, {Component} from 'react';
-import MapView from 'react-native-maps';
+import React, {useState, useRef, useEffect} from 'react';
+import MapView, {animateCamera} from 'react-native-maps';
 import {StyleSheet } from 'react-native';
 
-const Map = () => {
+export default function Map(){
+   const _map = useRef(null);
+
+   const [region, setregion] = useState({
+      latitude: 37.78825,
+      longitude: -122.4324,
+      latitudeDelta: 0.0922,
+      longitudeDelta: 0.0421,
+   });
+
+   useEffect(() => {
+      if(_map.current) {
+        _map.current.animateCamera(
+          {
+            center: {
+              latitude: region.latitude,
+              longitude: region.longitude
+            },
+            zoom: 15,
+          },
+        );
+      }
+    }, []);
+
    return (
       <MapView
          style = {styles.map}
+         ref={_map}
          showsUserLocation
          followUserLocation
          zoomEnabled 
-         initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
+         region={region}
+         onRegionChangeComplete={region => setregion(region)}
       />
    )
 }
-
-// export default class Map extends React.Component {
-
-//    // constructor(props) {
-//    //    super(props);
-//    //      this.state = {
-//    //       region: {
-//    //          latitude: 37.78825,
-//    //          longitude: -122.4324,
-//    //          latitudeDelta: 0.0922,
-//    //          longitudeDelta: 0.0421,
-//    //        },
-//    //    };
-//    //  }
-
-//    //  getInitialState() {
-//    //      return {
-//    //        region: new AnimatedRegion({
-//    //          latitude: LATITUDE,
-//    //          longitude: LONGITUDE,
-//    //          latitudeDelta: LATITUDE_DELTA,
-//    //          longitudeDelta: LONGITUDE_DELTA,
-//    //        }),
-//    //      };
-//    //    }
-      
-//    //    onRegionChange(region) {
-//    //      this.state.region.setValue(region);
-//    //    }
-      
-//    //    render() {
-//    //      return (
-//    //          <MapView
-//    //          style = {styles.map}
-//    //          showsUserLocation
-//    //          followUserLocation
-//    //          zoomEnabled
-//    //       />
-//    //      //   <Animated
-//    //      //     region={this.state.region}
-//    //      //     onRegionChange={this.onRegionChange}
-//    //      //   />
-//    //      );
-//    //    }
-//    render(){
-//       return (
-//          <MapView
-//          style={{ flex: 1 }}
-//          showsUserLocation
-//          initialRegion={{
-//              latitude: 37.78825,
-//              longitude: -122.4324,
-//              latitudeDelta: 0.0922,
-//              longitudeDelta: 0.0421,
-//          }}
-//        />
-//       )
-//    }
-
-// }
 
 const styles = StyleSheet.create ({
     map: {
       ...StyleSheet.absoluteFillObject,
     }
  })
-
- export default Map;

@@ -1,10 +1,10 @@
+//Source: https://www.instamobile.io/mobile-development/react-native-firebase-storage/
+
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import {
     View,
     SafeAreaView,
-    Text,
-    TouchableOpacity,
     StyleSheet,
     Platform,
     Alert,
@@ -12,6 +12,7 @@ import {
   } from 'react-native';
 import storage from '@react-native-firebase/storage';
 import * as Progress from 'react-native-progress';
+import FormButton from '../style/FormButton';
 
 const myImage = ({navigation, route}) =>{
     const [image, setImage] = useState(route.params.image);
@@ -19,7 +20,6 @@ const myImage = ({navigation, route}) =>{
     const [transferred, setTransferred] = useState(0);
 
     const uploadImage = async () => {
-        // const { uri } = image;
         const uri = image;
         const filename = uri.substring(uri.lastIndexOf('/') + 1);
         const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;
@@ -56,49 +56,23 @@ const myImage = ({navigation, route}) =>{
                 <Progress.Bar progress={transferred} width={300} />
               </View>
             ) : (
-              <TouchableOpacity style={styles.uploadButton} onPress={uploadImage}>
-                <Text style={styles.buttonText}>Upload image</Text>
-              </TouchableOpacity>
+              <FormButton
+                buttonTitle="Upload Image"
+                onPress={() => uploadImage()}
+              />
             )}
           </View>
         </SafeAreaView>
       );
     }
-    // return (
-    //     <View style = {{flex: 2}}>
-    //         <Image source={{uri: route.params.image}} style={{flex: 1}} />
-    //     </View>
-    // )
-// }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      backgroundColor: '#bbded6'
-    },
-    selectButton: {
-      borderRadius: 5,
-      width: 150,
-      height: 50,
-      backgroundColor: '#8ac6d1',
-      alignItems: 'center',
-      justifyContent: 'center'
-    },
-    uploadButton: {
-      borderRadius: 5,
-      width: 150,
-      height: 50,
-      backgroundColor: '#ffb6b9',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginTop: 20
-    },
-    buttonText: {
-      color: 'white',
-      fontSize: 18,
-      fontWeight: 'bold'
-    },
+  container: {
+    backgroundColor: '#f5f5f5',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
     imageContainer: {
       marginTop: 30,
       marginBottom: 50,
