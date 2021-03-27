@@ -1,7 +1,7 @@
 //Source: https://www.instamobile.io/mobile-development/react-native-firebase-storage/
 
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
     View,
     SafeAreaView,
@@ -11,14 +11,25 @@ import {
     Image
   } from 'react-native';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
 import * as Progress from 'react-native-progress';
 import FormButton from '../style/FormButton';
+import { AuthContext } from '../nav/AuthProvider';
 
 const myImage = ({navigation, route}) =>{
     const [image, setImage] = useState(route.params.image);
     const [uploading, setUploading] = useState(false);
     const [transferred, setTransferred] = useState(0);
+    const ref = firestore().collection('todos');
+    const { user, logout } = useContext(AuthContext);
 
+    async function saveImage(uploadUri, filename){
+      const ref = firestore().collection(user.uid);
+      ref.add({
+        Name: filename, 
+        URI: uploadUri
+      })
+    }
     const uploadImage = async () => {
         const uri = image;
         const filename = uri.substring(uri.lastIndexOf('/') + 1);
@@ -36,10 +47,12 @@ const myImage = ({navigation, route}) =>{
         });
         try {
           await task;
+          await saveImage(uploadUri, filename);
         } catch (e) {
           console.error(e);
         }
         setUploading(false);
+
         Alert.alert(
           'Photo uploaded!',
           'Your photo has been uploaded to Firebase Cloud Storage!'
