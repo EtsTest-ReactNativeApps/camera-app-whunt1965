@@ -38,6 +38,18 @@ A snapshot of the camera displaying on my ugly homescreen is included below (scr
 
 ![snapshot](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase4.jpeg)
 
+### Phase 4.5 - Clean Up App for Extensibility
+Before moving on to setting up Firebase, I wanted to take some time to clean up my App by separating the map and camera into separate components and add some navigation features (to make the components more visible). To do so, I followed the react navigation tutorial available [here](https://reactnavigation.org/docs/getting-started) to add basic navigation for my app between the homescreen, camera, and map. Notably, this solved my earlier issues with the map not rendering on my home screen when separating my map view into a separate file. 
+
+Below, please find some photos of my slighly prettier (but still ugly!) app with the different components separated onto different screens (with a Navigation Stack used to navigate between them!).
+
+<p float="left">
+  <img src="https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase4_5_1.jpeg" width="250" />
+  <img src="https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase_4_5_2.jpeg" width="250" /> 
+  <img src="https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase_4_5_3.jpeg" width="250" /> 
+  <img src="https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase_4_5_4.jpeg" width="250" /> 
+</p>
+
 ### Phase 5 - SetUp Firebase
 TODO
 
