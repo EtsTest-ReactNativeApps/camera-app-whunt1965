@@ -20,11 +20,10 @@ const myImage = ({navigation, route}) =>{
     const [image, setImage] = useState(route.params.image);
     const [uploading, setUploading] = useState(false);
     const [transferred, setTransferred] = useState(0);
-    const ref = firestore().collection('todos');
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    const ref = firestore().collection(user.uid);
 
     async function saveImage(uploadUri, filename){
-      const ref = firestore().collection(user.uid);
       ref.add({
         Name: filename, 
         URI: uploadUri
