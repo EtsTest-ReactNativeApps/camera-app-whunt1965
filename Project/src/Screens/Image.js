@@ -20,16 +20,23 @@ const myImage = ({navigation, route}) =>{
     const [image, setImage] = useState(route.params.image);
     const [uploading, setUploading] = useState(false);
     const [transferred, setTransferred] = useState(0);
+    const [latitude, setLatitude] = useState(route.params.latitude);
+    const [longitude, setLongitude] = useState(route.params.longitude);
     const { user } = useContext(AuthContext);
     const ref = firestore().collection(user.uid);
+
 
     async function saveImage(uploadUri, filename){
       ref.add({
         Name: filename, 
-        URI: uploadUri
+        URI: uploadUri,
+        Latitude: latitude,
+        Longitude: longitude,
+
       })
     }
     const uploadImage = async () => {
+      
         const uri = image;
         const filename = uri.substring(uri.lastIndexOf('/') + 1);
         const uploadUri = Platform.OS === 'ios' ? uri.replace('file://', '') : uri;

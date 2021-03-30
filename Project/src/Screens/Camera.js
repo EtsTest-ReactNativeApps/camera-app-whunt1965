@@ -4,6 +4,8 @@ import React, {PureComponent} from 'react';
 import {RNCamera} from 'react-native-camera';
 import {View, AppRegistry,Alert, StyleSheet, Dimensions,} from 'react-native';
 import FormButton from '../style/FormButton';
+import Geolocation from '@react-native-community/geolocation';
+
 
 export default class Camera extends PureComponent {
   _isMounted = false;
@@ -11,12 +13,15 @@ export default class Camera extends PureComponent {
     super(props);
       this.state = {
       takingPic: false,
-      img: null
+      img: null,
+      latitude: 0,
+      longitude: 0
     };
   }
 
   componentDidMount(){
     this._isMounted = true;
+    this.getLocation();
   }
 
   componentWillUnmount(){
@@ -25,9 +30,23 @@ export default class Camera extends PureComponent {
 
   onPicture({uri}) {
     this.setImg(uri);
-    this.props.navigation.navigate('Image', {image : uri})
+    this.props.navigation.navigate('Image', {image : uri, latitude: this.latitude, longitude: this.longitude})
     // this.setImg(uri);
   }
+  
+  getLocation(){
+    Geolocation.getCurrentPosition(
+			position => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        console.log(this.latitude);
+        console.log(this.longitude);
+      },
+			error => Alert.alert(error.message),
+			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+		);
+  }
+
   onBackToCamera() {
     this.setImg(null);
   }
@@ -49,6 +68,7 @@ export default class Camera extends PureComponent {
 
       try {
          const data = await this.camera.takePictureAsync(options);
+        //  this.getLocation();
          this.onPicture(data);
       } catch (err) {
         Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));

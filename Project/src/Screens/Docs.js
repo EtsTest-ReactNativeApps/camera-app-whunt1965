@@ -4,70 +4,84 @@
 
 import React, {useState, useContext, useEffect} from 'react';
 import firestore from '@react-native-firebase/firestore';
-import { StyleSheet, FlatList, SafeAreaView, Button, View, Text, TextInput } from 'react-native';
+import storage from '@react-native-firebase/storage';
+import { StyleSheet, FlatList, SafeAreaView, Button, View, Text, TextInput, Image, TouchableHighlight } from 'react-native';
 import { AuthContext } from '../nav/AuthProvider';
 import Loading from '../style/Loading';
 import { set } from 'react-native-reanimated';
+import FormButton from '../style/FormButton';
+
+function useForceUpdate(){
+    const [value, setValue] = useState(0); // integer state
+    return () => setValue(value => value + 1); // update the state to force render
+}
 
 export default function Docs(navigation){
     const [docs, setdocs] = useState([]);
     const [ loading, setLoading ] = useState(true);
     const { user } = useContext(AuthContext);
-    const ref = firestore().collection(user.uid);
+    list = [];
+    const forceUpdate = useForceUpdate();
 
-    let list = [];
 
-    useEffect(() => {
-        ref.onSnapshot(querySnapshot =>{
-            querySnapshot.forEach(doc => {
-            const {Name, URI} = doc.data();
-            list.push({
-                id: doc.id,
-                Name,
-            });
-        
-        setdocs(list);
-        if(loading){
+    function downloadImages(){
+        llist = [];
+        const ref = firestore().collection(user.uid);
+        ref.get().then(snapshot =>{
+            snapshot.docs.forEach(doc=>{
+                const {Name, URI} = doc.data();
+                console.log(Name);
+                let imageRef = storage().ref('/'+ Name);
+                imageRef.getDownloadURL().then((url) => {
+                    console.log(url);
+                    llist.push({
+                        id: doc.id,
+                        uri: url,
+                    });
+                }).catch((e) => console.log('getting downloadURL of image error => ', e));
+            })
+            console.log(docs);
             setLoading(false);
-        }
-        })});
-    }, []);
-
-    // const renderItemComponent = ({ item }) => (
-    //     <Text style={styles.text}>{item.Name}</Text>
-    //   );
-
-    ListItem = (name)=>{
-        <View style={{flexDirection: 'row'}}>
-            <Text>{name}</Text>
-        </View>
+        })
+        return llist;
     }
 
-    // console.log(docs)
+    async function simulateStateChange(){
+        const list = await downloadImages();
+        setdocs(list);
+    }
+
+
     if (loading) {
-        return <Loading />;
+        return <View style={styles.container}>
+            <FormButton 
+            buttonTitle="Download!" 
+            onPress={() => simulateStateChange()}
+            />
+            </View>
+        // return <Loading />;
     }
 
     return(
-        <View style={styles.container}>{docs.map((item) =>(<Text>{item.Name}</Text>))}</View>
+        <SafeAreaView style={styles.container}>
+            <FormButton 
+                buttonTitle="Refresh to View" 
+                onPress={() => forceUpdate()}/>
+            {docs.map((item) =>(
+                <TouchableHighlight key={item.id}>
+                    <Image key={Date.now()} source = {{uri: item.uri}} style={{width: 200, height: 200}}/>
+                </TouchableHighlight>))}
+        </SafeAreaView>
     )
 
-    // return(
-    //     <SafeAreaView style={styles.container}>
-    //     <Text>Docs</Text>
-    //      <FlatList 
-    //         style={{flex: 2}}
-    //         data={docs}
-    //         renderItem={({item}) => {console.log(item.Name);return <ListItem name={item.Name}></ListItem>}}
-    //         keyExtractor={(item) => item.id}
-    //     />
-    //     </SafeAreaView>
-    // )
+
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 2,
+    //   flexDirection: "row",
+    //   flexWrap: "wrap",
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#f5f5f1'
