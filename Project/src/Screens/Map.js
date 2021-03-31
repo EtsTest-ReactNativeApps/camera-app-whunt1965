@@ -3,17 +3,14 @@
 import React, {PureComponent, useContext} from 'react';
 // import React, {useState, useRef, useEffect} from 'react';
 import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
-import {StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import {StyleSheet} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
-import FormButton from '../style/FormButton';
 import firestore from '@react-native-firebase/firestore';
 import { AuthContext } from '../nav/AuthProvider';
-import { LOADIPHLPAPI } from 'dns';
 
 
 export default class Map extends PureComponent {
-  static contextType = AuthContext;
-  // _isMounted = false;
+  static contextType = AuthContext;//context to get uid for firebase
   constructor(props) {
     super(props);
       this.state = {
@@ -26,12 +23,12 @@ export default class Map extends PureComponent {
         markers: [],
     };
   }
-  
 
   componentDidMount(){
-    const user = this.context.user;
     this.getCurrentLocation();
+    const user = this.context.user;
     this.getMarkers(user);
+    this.forceUpdate();
    }
 
    goToInitialLocation() {
@@ -65,22 +62,27 @@ export default class Map extends PureComponent {
 
   async getMarkers(user){
     const fs = firestore().collection(user.uid);
-    // let llist = [];
+    let llist = [];
     fs.get().then(snapshot =>{
       snapshot.docs.forEach(doc=>{
-     const {Latitude, Longitude} = doc.data();
-      this.state.markers.push({
+     const {Latitude, Longitude, Name} = doc.data();
+      llist.push({
           id: doc.id,
           latitude : Latitude,
-          longitude : Longitude
+          longitude : Longitude,
+          title: Name
         });
-        console.log(this.state.markers);
       })
+      this.setState({
+        markers: llist
+    });
     })
+    return llist;
   }
 
 
   render(){
+    console.log(this.state.markers);
     return(
       <MapView
             style={styles.map}
@@ -93,82 +95,20 @@ export default class Map extends PureComponent {
             initialRegion={this.state.initialRegion}>
 
       {this.state.markers.map((val, index) => {
-        console.log(val.latitude);
-        console.log("HIIIII");
         return (<MapView.Marker
           key={index}
           coordinate={{
           latitude: val.latitude,
           longitude: val.longitude
           }}
-          title = {"parking markers"}
+          title = {val.title}
          />); 
- })}
+      })}
     </MapView>
     )
   }
 }
 
-
-// export default function Map(){
-//    const _map = useRef(null);
-
-//    const [region, setregion] = useState({
-//       latitude: 37.78825,
-//       longitude: -122.4324,
-//       latitudeDelta: 0.0922,
-//       longitudeDelta: 0.0421,
-//    });
-
-//    function getLocation(){
-//     Geolocation.getCurrentPosition(
-// 			position => {
-//         setregion({
-//           latitude: position.coords.latitude,
-//           longitude: position.coords.longitude,
-//           latitudeDelta: 0.0922,
-//           longitudeDelta: 0.0421,
-//         });
-//         _map.animateToRegion(region)
-//         console.log(latitude);
-//         console.log(longitude);
-//       },
-// 			error => Alert.alert(error.message),
-// 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-//     );
-//     _map.animateToRegion(region)
-//   }
-
-//    useEffect(() => {
-//       if(_map.current) {
-//         _map.current.animateCamera(
-//           {
-//             center: {
-//               latitude: region.latitude,
-//               longitude: region.longitude
-//             },
-//             zoom: 15,
-//           },
-//         );
-//       }
-//     }, [region]);
-
-//    return (
-//       <MapView
-//          style = {styles.map}
-//          ref={_map}
-//          showsUserLocation
-//          followUserLocation
-//          zoomEnabled 
-//          region={region}
-//          onRegionChangeComplete={region => setregion(region)}
-//       >
-//       <FormButton 
-//       buttonTitle="Show Me Where I am!"
-//       onpress={() => getLocation()}/>
-//       </MapView>
-//    )
-// }
 
 const styles = StyleSheet.create ({
     map: {

@@ -13,7 +13,7 @@ export default function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate('Instructions')}
       />
       <FormButton
-        buttonTitle="Documents"
+        buttonTitle="My Photos"
         onPress={() => navigation.navigate('Docs')}
       />
       <FormButton
