@@ -75,9 +75,9 @@ Phase 7 consisted of detecting faces and blurring them before storage. To implem
 
 Once I had facial detection working, I used the [the same tutorial](https://www.fullstacklabs.co/blog/react-native-camera) that I had used to set up my camera initially to apply a filter on top of the image to "blur" the faces using [react-native-blur](https://github.com/Kureev/react-native-blur). Unfortunately, this filter was not able to be captured by the Camera's take picture method, so I had to turn [react-native-viewshot](https://github.com/gre/react-native-view-shot) for screen capturing. Unfortunately, though, the screen shot is not compatible with a camera view (ie, a screen shot wouldn't render the actual picture displayed by the camera's lens), so I had to put together the following "hack": 1) take a picture with the RN camera; 2) Display the image from the camera on the phone (with my blur box over the detected face); 3) Screen shot this image with view-shot; 4) Save in Firebase.
 
-This is far from a perfect (or even good) solution, but it ensures that we are able to "blur" faces before storing them.
+This is far from a perfect (or even good) solution, but it ensures that we are able to "blur" faces before storing them. (Note, I chose to blur faces even prior to taking a picture, but this could be easily reverted).
 
-A short demo of my Phase 7 work is below (note, I chose to blur faces even prior to taking a picture, but this could be easily reverted).
+A short demo of my Phase 7 work is below (note, this is indeed Phase 7, please ignore my calling it "Phase 6" in the beginning of the demo).
 
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase7_demo.mp4)
 
