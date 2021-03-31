@@ -13,7 +13,6 @@ target 'Project' do
   )
 
 
-
   target 'ProjectTests' do
     inherit! :complete
     # Pods for testing
@@ -29,3 +28,8 @@ target 'Project' do
     react_native_post_install(installer)
   end
 end
+
+pod 'react-native-camera', path: '../node_modules/react-native-camera', subspecs: [
+  'FaceDetectorMLKit',
+  'BarcodeDetectorMLKit'
+]

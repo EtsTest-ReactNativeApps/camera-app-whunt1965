@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/blur": "^3.6.0",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^11.2.0",
@@ -21,7 +22,7 @@
     "@react-navigation/stack": "^5.14.3",
     "react": "17.0.1",
     "react-native": "0.64.0",
-    "react-native-camera": "^3.43.0",
+    "react-native-camera": "davidgovea/react-native-camera#standalone-mlkit",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-maps": "0.27.1",
     "react-native-progress": "^4.1.2",
@@ -29,7 +30,8 @@
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^2.18.1",
     "react-native-unordered-list": "^1.0.4",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-view-shot": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
