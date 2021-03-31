@@ -81,8 +81,6 @@ A short demo of my Phase 7 work is below (note, I chose to blur faces even prior
 
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase7_demo.mp4)
 
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
-
 ### Phase 8 - Scan barcodes and save the data per image.
 TODO
 
