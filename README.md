@@ -58,9 +58,17 @@ Rather than upload a bunch of photos of the app, I recorded the below video of t
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase5_demo.mp4)
 
 ### Phase 6 - Store cloud data in the cloud and display as list on the phone
-TODO
+In Phase 6, I added the ability to retrieve images stored in Firebase and display them in a list format as well as display the locations in which the images were taken as markers on a map.
 
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
+For displaying the images as a list, I first updated my photo upload component to both store the photo in the Firebase cloud storage as well as store the image name, URI in firebase, and latitude/longitude in the Cloud Firestore (a NoSQL db). To ensure that a user can only view their own photos (and not anyone else's), I created a collection unique to each user (using the unique UID assigned by my firebase login) as the collection title. To get the latitude and longitude, I imstalled the @react-native-community/geolocation package and followed a few different stack overflow posts (such as [this one](https://stackoverflow.com/questions/43176862/get-current-location-latitude-and-longitude-in-reactnative-using-react-native-m)) to capture the latitude and longitude. I then needed to figure out how to loop through all the documents in the user's collection and display the photos. I reviewed [this tutorial](https://medium.com/@sultanbutt820/react-native-image-upload-retrieve-delete-from-firebase-cloud-storage-ios-android-e05c7cdbf1d2), a few [stack overflow posts](https://stackoverflow.com/questions/46632367/firebase-firestore-collection-retrieval-in-react-native) as well the [documentation for cloud storage](https://rnfirebase.io/storage/usage). Ultimately, this required looping through all documents in the firestore collection and then downloading a URL from firebase storage to display the image.
+
+Unfortunately, my solution ended being far from perfect as the asynchronous methods needed to retrieve all this info cause lags in the display. I therefore had to add a refresh button to force the screen to refresh and display the image. In production I would need a different solution, but it works for now!
+
+For displaying the markers on a map, I first followed [this tutorial](https://medium.com/@arvind.chak128/how-to-auto-zoom-into-your-current-location-using-react-native-maps-88f9b3063fe7) to make my map auto-zoom on my current location, which was a problem I had previously. Then, I used the method as above to loop through my firestore collection for a given user and retrieve the latitude and longitude (as well as image title) for each photo. I then used [this stackoverflow post](https://stackoverflow.com/questions/58936356/dynamically-rendering-mapview-marker-react-native) for help in rendering markers dynamically. For now, my markers just contain the image name, but with some more tweaking, I could probably have the picture render as well (though this would obviously create more slowdown issues). 
+
+A short demo video of Phase 6 in action is linked below. Notably, I tried to take some photos with my phone disconnected from Metro/my computer, but ran into some issues with the live deployment crashing. Certainly a bug that would need to be fixed for production!
+
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase6_demo.mp4)
 
 ### Phase 7 - Detect Faces and blur them before you store them.
 TODO
