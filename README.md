@@ -71,9 +71,15 @@ A short demo video of Phase 6 in action is linked below. Notably, I tried to tak
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase6_demo.mp4)
 
 ### Phase 7 - Detect Faces and blur them before you store them.
-TODO
+Phase 7 consisted of detecting faces and blurring them before storage. To implement this, I first had to get the Facial Detection Features of the Camera working -- which was a tougher task than it seemed since the React Native Camera uses a deprecated Firestore API for this feature (which caused all kinds of dependency issues in Cocoapods). After a couple of searching, I came across [this GitHub forum](https://github.com/react-native-camera/react-native-camera/issues/3076) on this issue and found a branch of the react native camera which allows support for the ML features.
 
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
+Once I had facial detection working, I used the [the same tutorial](https://www.fullstacklabs.co/blog/react-native-camera) that I had used to set up my camera initially to apply a filter on top of the image to "blur" the faces using [react-native-blur](https://github.com/Kureev/react-native-blur). Unfortunately, this filter was not able to be captured by the Camera's take picture method, so I had to turn [react-native-viewshot](https://github.com/gre/react-native-view-shot) for screen capturing. Unfortunately, though, the screen shot is not compatible with a camera view (ie, a screen shot wouldn't render the actual picture displayed by the camera's lens), so I had to put together the following "hack": 1) take a picture with the RN camera; 2) Display the image from the camera on the phone (with my blur box over the detected face); 3) Screen shot this image with view-shot; 4) Save in Firebase.
+
+This is far from a perfect (or even good) solution, but it ensures that we are able to "blur" faces before storing them. (Note, I chose to blur faces even prior to taking a picture, but this could be easily reverted).
+
+A short demo of my Phase 7 work is below (note, this is indeed Phase 7, please ignore my calling it "Phase 6" in the beginning of the demo).
+
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase7_demo.mp4)
 
 ### Phase 8 - Scan barcodes and save the data per image.
 TODO
