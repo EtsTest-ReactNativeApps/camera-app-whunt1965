@@ -1,7 +1,7 @@
 // Source Referenced - https://www.fullstacklabs.co/blog/react-native-camera
 import 'react-native-gesture-handler';
 import React, {PureComponent} from 'react';
-import {RNCamera,  FaceDetector } from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 import {View, AppRegistry,Alert, StyleSheet, Dimensions,Text, FlatList, Image} from 'react-native';
 import FormButton from '../style/FormButton';
 import BlurFilter from '../style/BlurFilter';
@@ -36,22 +36,11 @@ export default class Camera extends PureComponent {
   }
 
 onPicture = async() =>{
-
- const uri = await captureScreen({
-    format: "jpg",
-    quality: 0.8
-    });
-    uri=>(console.log(uri));
-
-    // captureScreen({
-    //   format: "jpg",
-    //   quality: 0.8
-    // }).then(
-    //   uri=>(console.log(uri)
-    //   // uri=>(this.props.navigation.navigate('Image', {image : uri, latitude: this.latitude, longitude: this.longitude})
-    // ));
+    const uri = await captureScreen({
+      format: "jpg",
+      quality: 0.8
+      });
     this.props.navigation.navigate('Image', {image : uri, latitude: this.latitude, longitude: this.longitude})
-    // this.setImg(uri);
   }
   
   getLocation(){
@@ -67,13 +56,6 @@ onPicture = async() =>{
 		);
   }
 
-  onBackToCamera() {
-    this.setImg(null);
-  }
-
-  setImg({uri}){
-    this.img = uri;
-  }
 
   onFaceDetected = ({faces}) => {
     if (faces[0]) {
@@ -111,80 +93,18 @@ onPicture = async() =>{
          const data = await this.camera.takePictureAsync(options);
          this.setState({image:data.uri});
          console.log(data);
-        //  console.log(data);
-        //  this.setImg(data);
-        //  this.setState({readytoUpload: true});
-        // console.log(this.state.readytoUpload);
 
-        // const data = await captureScreen({
-        //   format: "jpg",
-        //   quality: 0.8
-        // });
-        // const data = await this.refs.viewShot.capture();
-        console.log(data);
-        //  this.getLocation();
-        // await this.submitToGoogle(data.base64);
-        //  this.onPicture(data);
       } catch (err) {
         Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));
         return;
       } finally {
-        // this.setImg(data);
-        // this.setImg(data);
         this.setState({takingPic: false});
         this.setState({readytoUpload: true});
-        console.log(this.state.readytoUpload);
       }
     }
   };
 
-  // submitToGoogle = async (data) => {
-	// 	try {
-	// 		this.setState({ uploading: true });
-  //     const imageURI = data;
-  //     // console.log(imageURI);
-	// 		let body = JSON.stringify({
-	// 			requests: [
-	// 				{
-	// 					features: [
-	// 						{ type: 'FACE_DETECTION', maxResults: 1 },
-	// 					],
-	// 					image: {
-  //             content: imageURI,
-	// 						// source: {
-	// 						// 	imageUri: imageURI
-	// 						// }
-	// 					}
-	// 				}
-	// 			]
-  //     });
-  //     let response = await fetch(
-	// 			'https://vision.googleapis.com/v1/images:annotate?key=' +
-  //       'AIzaSyD8OSVEJbvN_kEtFCnd-9up5QiMSrwoLJI',
-	// 			{
-	// 				headers: {
-	// 					Accept: 'application/json',
-	// 					'Content-Type': 'application/json'
-	// 				},
-	// 				method: 'POST',
-	// 				body: body
-				// }
-	// 		);
-	// 		let responseJson = await response.json();
-	// 		console.log(responseJson);
-	// 		this.setState({
-	// 			googleResponse: responseJson,
-	// 			uploading: false
-	// 		});
-	// 	} catch (error) {
-	// 		console.log(error);
-	// 	}
-  // };
   
-
-
-
-
   render(){
     if(this.state.readytoUpload == true){
       return (
@@ -205,7 +125,6 @@ onPicture = async() =>{
     else{
     return(
       <View style={{flex:3}}>
-      {/* // <ViewShot style = {{flex: 2}} ref="viewShot" options={{ format: "jpg", quality: 0.9 }}> */}
       <RNCamera
         ref = {ref => {
           this.camera = ref;
@@ -216,7 +135,6 @@ onPicture = async() =>{
         onCameraReady={() => this.setState({canDetectFaces: true})}
         faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
         onFacesDetected={this.state.canDetectFaces ? this.onFaceDetected: null}
-        // onFacesDetected={this.onFaceDetected}
         androidCameraPermissionOptions={{
           title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
@@ -228,15 +146,6 @@ onPicture = async() =>{
             <BlurFilter {...this.state.box} />
           </>
         )}
-
-        {/* {this.state.googleResponse && (
-							<FlatList style = {{flex: 2}}
-								data={this.state.googleResponse.responses[0].labelAnnotations}
-								extraData={this.state}
-								keyExtractor={this._keyExtractor}
-								renderItem={({ item }) => <Text>Item: {item.description}</Text>}
-							/>
-            )} */}
         <View style={styles.btnAlignment}>
           <FormButton
             buttonTitle="Snap!" 
@@ -244,7 +153,6 @@ onPicture = async() =>{
             />
           </View>
       </RNCamera>
-      {/* // </ViewShot> */}
       </View>
     );
     }
