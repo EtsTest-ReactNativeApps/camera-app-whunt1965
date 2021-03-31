@@ -15,6 +15,7 @@ export default class Camera extends PureComponent {
   constructor(props) {
     super(props);
       this.state = {
+      front = false,
       takingPic: false,
       readytoUpload: false,
       box: null,
@@ -22,7 +23,7 @@ export default class Camera extends PureComponent {
       loading:false,
       latitude: 0,
       longitude: 0,
-      googleResponse: null
+      barcode: null,
     };
   }
 
@@ -55,6 +56,15 @@ onPicture = async() =>{
 			{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
 		);
   }
+
+  onBarCodeRead(scanResult) {
+    console.log(scanResult.type);
+    console.log(scanResult.data);
+    if (scanResult.data != null) {
+      this.setState({barcode: scanResult.data});
+    }
+  }
+  
 
 
   onFaceDetected = ({faces}) => {
@@ -131,7 +141,8 @@ onPicture = async() =>{
         }}
         captureAudio={false}
         style={{flex: 1}}
-        type={RNCamera.Constants.Type.front}
+        type={this.state.front ? RNCamera.Constants.Type.front: RNCamera.Constants.Type.back}
+        onBarCodeRead={this.onBarCodeRead.bind(this)}
         onCameraReady={() => this.setState({canDetectFaces: true})}
         faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
         onFacesDetected={this.state.canDetectFaces ? this.onFaceDetected: null}
