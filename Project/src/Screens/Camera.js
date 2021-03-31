@@ -15,7 +15,7 @@ export default class Camera extends PureComponent {
   constructor(props) {
     super(props);
       this.state = {
-      front = false,
+      front: false,
       takingPic: false,
       readytoUpload: false,
       box: null,
@@ -37,11 +37,12 @@ export default class Camera extends PureComponent {
   }
 
 onPicture = async() =>{
+  console.log(this.state.barcode);
     const uri = await captureScreen({
       format: "jpg",
       quality: 0.8
       });
-    this.props.navigation.navigate('Image', {image : uri, latitude: this.latitude, longitude: this.longitude})
+    this.props.navigation.navigate('Image', {image : uri, bcode: this.state.barcode, latitude: this.latitude, longitude: this.longitude})
   }
   
   getLocation(){
@@ -57,6 +58,7 @@ onPicture = async() =>{
 		);
   }
 
+  //source: https://medium.com/@goodpic/rncamera-as-a-free-barcode-scanner-lib-for-react-native-110fa0c610af
   onBarCodeRead(scanResult) {
     console.log(scanResult.type);
     console.log(scanResult.data);
@@ -65,8 +67,6 @@ onPicture = async() =>{
     }
   }
   
-
-
   onFaceDetected = ({faces}) => {
     if (faces[0]) {
       this.setState({
@@ -120,9 +120,11 @@ onPicture = async() =>{
       return (
       <ViewShot ref="viewShot" style={{flex: 1}} options={{ format: "jpg", quality: 0.9}}>
         <Image source={{ uri: this.state.image }} style={{flex:10}}/>
-        <>
-            <RevBlurFilter {...this.state.box} />
+        {this.state.box && (
+          <>
+            <BlurFilter {...this.state.box} />
           </>
+        )}
           <View style={styles.btnAlignment}>
           <FormButton
             buttonTitle="Save!" 

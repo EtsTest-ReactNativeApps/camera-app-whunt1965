@@ -26,12 +26,13 @@ const myImage = ({navigation, route}) =>{
     const ref = firestore().collection(user.uid);
 
 
-    async function saveImage(uploadUri, filename){
+    async function saveImage(uploadUri, filename, barcode){
       ref.add({
         Name: filename, 
         URI: uploadUri,
         Latitude: latitude,
         Longitude: longitude,
+        BarcodeData: barcode,
 
       })
     }
@@ -53,7 +54,7 @@ const myImage = ({navigation, route}) =>{
         });
         try {
           await task;
-          await saveImage(uploadUri, filename);
+          await saveImage(uploadUri, filename, route.params.bcode);
         } catch (e) {
           console.error(e);
         }
