@@ -3,7 +3,7 @@ This repository contains a Camera application to help us scan products, track wh
 - Take a picture
 - Detect faces and blur them
 - Read barcodes and store them
-- Capture Geotags and display images on a map
+- Capture Geotags and display image locations on a map
 
 Notably: We will be connecting our application to Firebase to take advantage of cloud storage and authentication mechanism
 
