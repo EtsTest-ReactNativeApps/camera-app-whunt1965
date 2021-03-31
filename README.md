@@ -68,7 +68,7 @@ For displaying the markers on a map, I first followed [this tutorial](https://me
 
 A short demo video of Phase 6 in action is linked below. Notably, I tried to take some photos with my phone disconnected from Metro/my computer, but ran into some issues with the live deployment crashing. Certainly a bug that would need to be fixed for production!
 
-[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase6_demo.mp4)
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase6_demo.mp4)
 
 ### Phase 7 - Detect Faces and blur them before you store them.
 TODO
