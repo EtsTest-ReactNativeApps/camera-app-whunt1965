@@ -7,6 +7,20 @@ This repository contains a Camera application to help us scan products, track wh
 
 Notably: We will be connecting our application to Firebase to take advantage of cloud storage and authentication mechanism
 
+## Architecture
+My application is built in react native and has the following architecture:
+- Authentication (controlled by an authentication navigator)
+  - The authentication consists of screens for signing up and logging in (all authentication done via firebase's authentication mechanisms).
+  - The user's uid is stored locally as well during each session so that it can be used to query firebase and retrieve photos/data
+
+- Main App (controlled with a main navigator after authorization)
+  - The main app consists of the following screens:
+    - Home Screen: The landing page of the app used to navigate to other screens
+    - Details Screen: Lists information about the app
+    - My Photos Screen: Displays user photos uploaded via the camera (photos are retrieved from Firebase Storage and displayed)
+    - Camera Screen: Allows a user to take a photo/scan a barcode and upload it via the image screen (image and metadata are uploaded to Firebase Storage and Cloud Firestore respectively)
+    - Map: Displays image location and shows pins in locations where uploaded photos have been taken (data on images is retrieved from Cloud Firestore).
+
 ## Phases 
 In developing this project, we pursued a multi-phased approach. A description of individual phases is included below.
 
@@ -82,11 +96,11 @@ A short demo of my Phase 7 work is below (note, this is indeed Phase 7, please i
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase7_demo.mp4)
 
 ### Phase 8 - Scan barcodes and save the data per image.
-TODO
+In Phase 8, I added a barcode scanning feature to my application and stored the barcode data in firebase. To implement this feature, I used [this tutorial](https://medium.com/@goodpic/rncamera-as-a-free-barcode-scanner-lib-for-react-native-110fa0c610af) on using the react native camera's barcode scanning feature. Then, I simply modified my upload image component to also save the barcode data along with the other metadata (and URL in firebase storage) for the image. 
 
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
+A short video demonstrating this Phase 8 feature is included below:
+
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase8_demo.mp4)
 
 ### Phase 9 - Store images and barcode in Firebase
-TODO
-
-After completing the tutorial, we produced a simple REACT native application on an IOS emulator which is displayed below.
+Luckily, Phase 9 was completed in the earlier phases (5-8)! As shown in earlier videos, my images are stored in Firebase storage and all image metadata (image name, barcode data, location, and URL in firebase (for downloading the image on the app)) is stored in the NoSQL cloud firestore. 
