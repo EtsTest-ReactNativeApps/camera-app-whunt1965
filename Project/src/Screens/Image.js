@@ -19,7 +19,7 @@ const myImage = ({navigation, route}) =>{
     const { user } = useContext(AuthContext);
     const ref = firestore().collection(user.uid);
 
-
+    //Saves image metadata to Firebase firestore
     async function saveImage(uploadUri, filename, barcode){
       ref.add({
         Name: filename, 
