@@ -4,10 +4,12 @@
 import React, {PureComponent, useContext} from 'react';
 // import React, {useState, useRef, useEffect} from 'react';
 import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 import { AuthContext } from '../nav/AuthProvider';
+import Loading from '../style/Loading';
 
 
 export default class Map extends PureComponent {
@@ -22,6 +24,7 @@ export default class Map extends PureComponent {
           longitudeDelta: 0.0421
         }, 
         markers: [],
+        loading: true,
     };
   }
 
@@ -29,7 +32,14 @@ export default class Map extends PureComponent {
   componentDidMount(){
     this.getCurrentLocation();
     const user = this.context.user;
+    // this.getMarkers(user).then(()=>{
+    //   this.setState({
+    //     // markers: data,
+    //     loading: false
+    // });
+    // });
     this.getMarkers(user);
+    console.log(this.state.markers);
     this.forceUpdate();
    }
   //handle zoom to initial location
@@ -63,29 +73,37 @@ export default class Map extends PureComponent {
     );
   }
 
-  //retrieve image lat/long from firebase and display as markers on map
+  //retrieve image lat/long from firebase and display as markers on map (with image in callout)
   async getMarkers(user){
     const fs = firestore().collection(user.uid);
     let llist = [];
-    fs.get().then(snapshot =>{
-      snapshot.docs.forEach(doc=>{
-     const {Latitude, Longitude, Name} = doc.data();
+    const snapshot = await fs.get();
+    for(const doc of snapshot.docs){
+      const {Latitude, Longitude, Name} = doc.data();
+      const imageRef = storage().ref('/'+ Name);
+      const url = await imageRef.getDownloadURL();
+      console.log(url);
       llist.push({
           id: doc.id,
           latitude : Latitude,
           longitude : Longitude,
-          title: Name
+          title: Name,
+          uri: url,
         });
-      })
-      this.setState({
-        markers: llist
+    }
+    this.setState({
+      markers: llist,
+      loading: false
     });
-    })
-    return llist;
   }
 
   //render map
   render(){
+    if(this.state.loading){
+      return(
+        <Loading/>
+      )
+    }
     console.log(this.state.markers);
     return(
       <MapView
@@ -106,7 +124,11 @@ export default class Map extends PureComponent {
           longitude: val.longitude
           }}
           title = {val.title}
-         />); 
+         >
+        <MapView.Callout>
+          <Image source = {{uri: val.uri}} style={{width: 200, height: 200}}/>
+        </MapView.Callout>  
+        </MapView.Marker>); 
       })}
     </MapView>
     )

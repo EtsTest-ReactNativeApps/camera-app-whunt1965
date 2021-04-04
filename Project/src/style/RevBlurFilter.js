@@ -14,7 +14,6 @@ const RevBlurFilter = props =>{
           blurAmount={100}
           reducedTransparencyFallbackColor="white"
         />
-
         </View>
     )
 
@@ -25,12 +24,10 @@ const styles = StyleSheet.create({
       return {
         position: 'absolute',
         top: rightEyePosition.y - 100,
-        // left: x,
         left: rightEyePosition.x - 100,
         right: leftEyePosition.x -100,
         width,
         height,
-        // transform: [{rotateX: `${yawAngle}deg`}, {rotateY: `${-rollAngle}deg`}],
       };
     },
     absolute: {

@@ -132,7 +132,7 @@ onPicture = async() =>{
         <Image source={{ uri: this.state.image }} style={{flex:10}}/>
         {this.state.box && (
           <>
-            <BlurFilter {...this.state.box} />
+            <RevBlurFilter {...this.state.box} />
           </>
         )}
           <View style={styles.btnAlignment}>
@@ -174,6 +174,10 @@ onPicture = async() =>{
             <FormButton
               buttonTitle="Snap!" 
               onPress={this.takePicture}
+            />
+            <FormButton
+            buttonTitle="Switch Camera!" 
+            onPress={() => this.setState({front: !(this.state.front)})}
             />
           </View>
         </RNCamera>
