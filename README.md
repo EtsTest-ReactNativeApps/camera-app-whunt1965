@@ -3,9 +3,11 @@ This repository contains a Camera application to help us scan products, track wh
 - Take a picture
 - Detect faces and blur them
 - Read barcodes and store them
-- Capture Geotags and display images on a map
+- Capture Geotags and display image locations on a map
 
 Notably: We will be connecting our application to Firebase to take advantage of cloud storage and authentication mechanism
+
+(Note: If demo links break -- all videos are available as photos!)
 
 ## Architecture
 My application is built in react native and has the following architecture:
@@ -69,7 +71,7 @@ In Phase 5, I set up and connected my application to Firebase. To do so, I follo
 
 Rather than upload a bunch of photos of the app, I recorded the below video of the app running on my phone and uploading a photo to Firebase. 
 
-[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Phase5_demo.mp4)
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/phase5_demo.mp4)
 
 ### Phase 6 - Store cloud data in the cloud and display as list on the phone
 In Phase 6, I added the ability to retrieve images stored in Firebase and display them in a list format as well as display the locations in which the images were taken as markers on a map.
