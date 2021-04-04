@@ -126,13 +126,19 @@ onPicture = async() =>{
   //Render function
   render(){
     //If we are ready to upload, display the captured picture and allow user to save (screen shot)
+    //reverse blur filter for front camera
     if(this.state.readytoUpload == true){
       return (
       <ViewShot ref="viewShot" style={{flex: 1}} options={{ format: "jpg", quality: 0.9}}>
         <Image source={{ uri: this.state.image }} style={{flex:10}}/>
-        {this.state.box && (
+        {this.state.box && this.state.front &&(
           <>
             <RevBlurFilter {...this.state.box} />
+          </>
+        )}
+        {this.state.box && !this.state.front &&(
+          <>
+            <BlurFilter {...this.state.box} />
           </>
         )}
           <View style={styles.btnAlignment}>
