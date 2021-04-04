@@ -107,9 +107,16 @@ A short video demonstrating this Phase 8 feature is included below:
 ### Phase 9 - Store images and barcode in Firebase
 Luckily, Phase 9 was completed in the earlier phases (5-8)! As shown in earlier videos, my images are stored in Firebase storage and all image metadata (image name, barcode data, location, and URL in firebase (for downloading the image on the app)) is stored in the NoSQL cloud firestore. 
 
-### Final Improvements
+### More Improvements
 To close things out, I made a couple of final improvements to my App. First, I added a button on the camera page that would allow a user to switch between using front and back cameras. Then, on the map, I finally figured out how to display images on the map itself (using callouts for markers).
 
 A short demo of these new features is linked below:
+
+[Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Improvements_demo.mp4)
+
+### Final App Walk-through
+So, admittedly I had a lot of fun with this App and wanted to do one final pass of improvements. In addition to changing all the button colors, I re-did my photo display page so that everything would load automatically on the page (versus having to make the user download and refresh). I also now display the barcode data on the map in addition to the images. 
+
+There's still tons that I could do, but the final walkthrough video below shows how my app ended up.
 
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Final_demo.mp4)

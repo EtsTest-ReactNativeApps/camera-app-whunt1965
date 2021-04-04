@@ -4,7 +4,7 @@
 import React, {PureComponent, useContext} from 'react';
 // import React, {useState, useRef, useEffect} from 'react';
 import MapView, { AnimatedRegion, Marker } from 'react-native-maps';
-import {StyleSheet, Image} from 'react-native';
+import {StyleSheet, Image, Text} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -79,7 +79,7 @@ export default class Map extends PureComponent {
     let llist = [];
     const snapshot = await fs.get();
     for(const doc of snapshot.docs){
-      const {Latitude, Longitude, Name} = doc.data();
+      const {Latitude, Longitude, Name, BarcodeData} = doc.data();
       const imageRef = storage().ref('/'+ Name);
       const url = await imageRef.getDownloadURL();
       console.log(url);
@@ -89,6 +89,7 @@ export default class Map extends PureComponent {
           longitude : Longitude,
           title: Name,
           uri: url,
+          bcode: BarcodeData
         });
     }
     this.setState({
@@ -127,6 +128,9 @@ export default class Map extends PureComponent {
          >
         <MapView.Callout>
           <Image source = {{uri: val.uri}} style={{width: 200, height: 200}}/>
+          {val.bcode &&(
+            <Text>{val.bcode}</Text>
+          )}
         </MapView.Callout>  
         </MapView.Marker>); 
       })}

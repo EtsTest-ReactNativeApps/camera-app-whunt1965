@@ -8,7 +8,7 @@ import Camera from '../Screens/Camera'
 import DetailsScreen from '../Screens/Details'
 import Map from '../Screens/Map'
 import myImage from '../Screens/Image'
-import Docs from '../Screens/Docs'
+import MyPhotos from '../Screens/MyPhotos'
 
 const Stack = createStackNavigator();
 
@@ -17,7 +17,7 @@ export default function MainStack() {
     <Stack.Navigator>
       <Stack.Screen name='Home' component={HomeScreen} />
       <Stack.Screen name="Instructions" component={DetailsScreen} />
-      <Stack.Screen name="Docs" component={Docs} />
+      <Stack.Screen name="MyPhotos" component={MyPhotos} />
       <Stack.Screen name="Camera" component={Camera} />
       <Stack.Screen name="Map" component={Map} />
       <Stack.Screen name="Image" component={myImage} />
