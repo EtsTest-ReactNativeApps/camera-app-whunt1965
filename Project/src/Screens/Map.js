@@ -1,3 +1,4 @@
+//Simple map that displays user location and pins of locations where stored photos were taken
 //source https://medium.com/@arvind.chak128/how-to-auto-zoom-into-your-current-location-using-react-native-maps-88f9b3063fe7
 
 import React, {PureComponent, useContext} from 'react';
@@ -24,20 +25,22 @@ export default class Map extends PureComponent {
     };
   }
 
+  //handles mounting
   componentDidMount(){
     this.getCurrentLocation();
     const user = this.context.user;
     this.getMarkers(user);
     this.forceUpdate();
    }
-
-   goToInitialLocation() {
+  //handle zoom to initial location
+  goToInitialLocation() {
     let initialRegion = Object.assign({}, this.state.initialRegion);
     initialRegion["latitudeDelta"] = 0.005;
     initialRegion["longitudeDelta"] = 0.005;
     this.mapView.animateToRegion(initialRegion, 2000);
   }
 
+  //retrieves curent location from Geolocation
   async getCurrentLocation() {
     Geolocation.getCurrentPosition(
         position => {
@@ -60,6 +63,7 @@ export default class Map extends PureComponent {
     );
   }
 
+  //retrieve image lat/long from firebase and display as markers on map
   async getMarkers(user){
     const fs = firestore().collection(user.uid);
     let llist = [];
@@ -80,7 +84,7 @@ export default class Map extends PureComponent {
     return llist;
   }
 
-
+  //render map
   render(){
     console.log(this.state.markers);
     return(

@@ -1,3 +1,5 @@
+//Simple blur filter to blur a person's face using data from the RN camera's face detector
+
 import React, {useState, useEffect, useRef} from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import { BlurView } from "@react-native-community/blur";
@@ -23,12 +25,10 @@ const styles = StyleSheet.create({
       return {
         position: 'absolute',
         top: rightEyePosition.y - 100,
-        // left: x,
         right: rightEyePosition.x - 100,
         left: leftEyePosition.x -100,
         width,
         height,
-        // transform: [{rotateX: `${yawAngle}deg`}, {rotateY: `${-rollAngle}deg`}],
       };
     },
     absolute: {

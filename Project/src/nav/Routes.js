@@ -1,3 +1,6 @@
+//Checks for changes in authorization sttaus and provides the correct navigation based on 
+//whether or not a user is logged in
+
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 
 import React, { useContext, useState, useEffect } from 'react';

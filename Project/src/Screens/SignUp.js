@@ -1,3 +1,4 @@
+//Simple sign up page for app -- creates an account in firebase (using our AuthContext)
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';

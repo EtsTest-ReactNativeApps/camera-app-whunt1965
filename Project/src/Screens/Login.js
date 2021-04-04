@@ -1,3 +1,4 @@
+//Simple login page for app -- verifies an account in firebase (using our AuthContext)
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 
 import React, { useState, useContext } from 'react';

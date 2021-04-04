@@ -1,3 +1,4 @@
+//Simple Input form used by login and signup screens
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 
 import React from 'react';

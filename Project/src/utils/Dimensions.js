@@ -1,3 +1,4 @@
+// useful tools for style setting
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 
 import { Dimensions } from 'react-native';

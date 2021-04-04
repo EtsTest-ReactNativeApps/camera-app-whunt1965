@@ -1,15 +1,9 @@
+//Screen displays image and interfaces with Firebase to upload metadata to cloud FireStore and images to Firebase Storage
 //Source: https://www.instamobile.io/mobile-development/react-native-firebase-storage/
 
 import 'react-native-gesture-handler';
 import React, { useState, useContext } from 'react';
-import {
-    View,
-    SafeAreaView,
-    StyleSheet,
-    Platform,
-    Alert,
-    Image
-  } from 'react-native';
+import {View,SafeAreaView,StyleSheet,Platform,Alert,Image} from 'react-native';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 import * as Progress from 'react-native-progress';
@@ -36,6 +30,7 @@ const myImage = ({navigation, route}) =>{
 
       })
     }
+    //Async function to upload metadat and images
     const uploadImage = async () => {
       
         const uri = image;

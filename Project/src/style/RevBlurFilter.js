@@ -1,3 +1,5 @@
+//'Reverse" blur filter used to transpose blur filter on a screenshot (where right and left are flipped)
+
 import React, {useState, useEffect, useRef} from 'react';
 import {Image, View, StyleSheet} from 'react-native';
 import { BlurView } from "@react-native-community/blur";

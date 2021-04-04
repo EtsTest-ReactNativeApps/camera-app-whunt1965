@@ -1,3 +1,4 @@
+// Camera screen -- allows user to take pictures and scan barcodes
 // Source Referenced - https://www.fullstacklabs.co/blog/react-native-camera
 import 'react-native-gesture-handler';
 import React, {PureComponent} from 'react';
@@ -27,15 +28,19 @@ export default class Camera extends PureComponent {
     };
   }
 
+  //Handle mounting
   componentDidMount(){
     this._isMounted = true;
     this.getLocation();
   }
 
+  //Handle unmounting
   componentWillUnmount(){
     this._isMounted = false;
   }
 
+//When a picture is takes and we choose to save it, does a screen capture (so we can get the blur filter
+//over a face) and takes us to the image page
 onPicture = async() =>{
   console.log(this.state.barcode);
     const uri = await captureScreen({
@@ -44,7 +49,8 @@ onPicture = async() =>{
       });
     this.props.navigation.navigate('Image', {image : uri, bcode: this.state.barcode, latitude: this.latitude, longitude: this.longitude})
   }
-  
+
+  //Fetch location on component load so we can add lat/long to picture (for mapping)
   getLocation(){
     Geolocation.getCurrentPosition(
 			position => {
@@ -58,6 +64,7 @@ onPicture = async() =>{
 		);
   }
 
+  //Handles Barcode dection -- captures barcode data and stores in state variables
   //source: https://medium.com/@goodpic/rncamera-as-a-free-barcode-scanner-lib-for-react-native-110fa0c610af
   onBarCodeRead(scanResult) {
     console.log(scanResult.type);
@@ -67,6 +74,7 @@ onPicture = async() =>{
     }
   }
   
+  //When a face is detected (by the RN camera), captures key coordinates so we can add our blur filter
   onFaceDetected = ({faces}) => {
     if (faces[0]) {
       this.setState({
@@ -81,13 +89,14 @@ onPicture = async() =>{
           leftEyePosition: faces[0].leftEyePosition,
         },
       });
-    } else {
+    }else {
       this.setState({
         box: null,
       });
     }
   };
 
+  //Handles picture capture - once completed, sets us in a ready to upload state
   takePicture = async () => {
     if (this.camera && !this.state.takingPic) {
 
@@ -104,18 +113,19 @@ onPicture = async() =>{
          this.setState({image:data.uri});
          console.log(data);
 
-      } catch (err) {
+      }catch (err) {
         Alert.alert('Error', 'Failed to take picture: ' + (err.message || err));
         return;
-      } finally {
-        this.setState({takingPic: false});
-        this.setState({readytoUpload: true});
+      }finally {
+          this.setState({takingPic: false});
+          this.setState({readytoUpload: true});
       }
     }
   };
 
-  
+  //Render function
   render(){
+    //If we are ready to upload, display the captured picture and allow user to save (screen shot)
     if(this.state.readytoUpload == true){
       return (
       <ViewShot ref="viewShot" style={{flex: 1}} options={{ format: "jpg", quality: 0.9}}>
@@ -134,39 +144,40 @@ onPicture = async() =>{
       </ViewShot>
       );
     }
+    //Otherwise, display RNCamera view for taking a picture
     else{
-    return(
-      <View style={{flex:3}}>
-      <RNCamera
-        ref = {ref => {
-          this.camera = ref;
-        }}
-        captureAudio={false}
-        style={{flex: 1}}
-        type={this.state.front ? RNCamera.Constants.Type.front: RNCamera.Constants.Type.back}
-        onBarCodeRead={this.onBarCodeRead.bind(this)}
-        onCameraReady={() => this.setState({canDetectFaces: true})}
-        faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
-        onFacesDetected={this.state.canDetectFaces ? this.onFaceDetected: null}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}>
-           {this.state.box && (
-          <>
-            <BlurFilter {...this.state.box} />
-          </>
-        )}
-        <View style={styles.btnAlignment}>
-          <FormButton
-            buttonTitle="Snap!" 
-            onPress={this.takePicture}
+      return(
+        <View style={{flex:3}}>
+        <RNCamera
+          ref = {ref => {
+            this.camera = ref;
+          }}
+          captureAudio={false}
+          style={{flex: 1}}
+          type={this.state.front ? RNCamera.Constants.Type.front: RNCamera.Constants.Type.back}
+          onBarCodeRead={this.onBarCodeRead.bind(this)}
+          onCameraReady={() => this.setState({canDetectFaces: true})}
+          faceDetectionLandmarks={RNCamera.Constants.FaceDetection.Landmarks.all}
+          onFacesDetected={this.state.canDetectFaces ? this.onFaceDetected: null}
+          androidCameraPermissionOptions={{
+            title: 'Permission to use camera',
+            message: 'We need your permission to use your camera',
+            buttonPositive: 'Ok',
+            buttonNegative: 'Cancel',
+          }}>
+            {this.state.box && (
+            <>
+              <BlurFilter {...this.state.box} />
+            </>
+          )}
+          <View style={styles.btnAlignment}>
+            <FormButton
+              buttonTitle="Snap!" 
+              onPress={this.takePicture}
             />
           </View>
-      </RNCamera>
-      </View>
+        </RNCamera>
+        </View>
     );
     }
   }

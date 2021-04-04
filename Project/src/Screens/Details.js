@@ -1,3 +1,5 @@
+//Simple text Page to display information on the app
+
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Unorderedlist from 'react-native-unordered-list';

@@ -1,4 +1,5 @@
-//Sources
+//Page to display images stored in firebase
+//Sources:
 //https://invertase.io/blog/getting-started-with-cloud-firestore-on-react-native
 //https://rnfirebase.io/firestore/usage
 
@@ -11,6 +12,9 @@ import Loading from '../style/Loading';
 import { set } from 'react-native-reanimated';
 import FormButton from '../style/FormButton';
 
+//Force auto refresh -- since images take a while to download (asynchronously) from firebase, used to force app to 
+//refresh and display images
+//source: https://stackoverflow.com/questions/46240647/react-how-to-force-a-function-component-to-render
 function useForceUpdate(){
     const [value, setValue] = useState(0); // integer state
     return () => setValue(value => value + 1); // update the state to force render
@@ -23,7 +27,9 @@ export default function Docs(navigation){
     list = [];
     const forceUpdate = useForceUpdate();
 
-
+    //download from images from firebase by:
+    // 1) Retrieve Image URLS from Cloud Firestore
+    // 2) Download images themselves from Firebase Cloud Storage
     function downloadImages(){
         llist = [];
         const ref = firestore().collection(user.uid);
@@ -46,12 +52,13 @@ export default function Docs(navigation){
         return llist;
     }
 
+    //Async function to initialize image download
     async function simulateStateChange(){
         const list = await downloadImages();
         setdocs(list);
     }
 
-
+    //Initial screen to prompt user to downlaod images
     if (loading) {
         return <View style={styles.container}>
             <FormButton 
@@ -59,9 +66,9 @@ export default function Docs(navigation){
             onPress={() => simulateStateChange()}
             />
             </View>
-        // return <Loading />;
     }
 
+    // Screen to show all images in firebase for a user
     return(
         <SafeAreaView style={styles.container}>
             <FormButton 
@@ -80,8 +87,6 @@ export default function Docs(navigation){
 const styles = StyleSheet.create({
     container: {
       flex: 2,
-    //   flexDirection: "row",
-    //   flexWrap: "wrap",
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#f5f5f1'

@@ -1,3 +1,4 @@
+//Navigation stack for a user who is not already authorized (need to sign in or create an account)
 //Source: https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/
 
 import React from 'react';
