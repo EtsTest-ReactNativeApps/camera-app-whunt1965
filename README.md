@@ -67,7 +67,7 @@ Below, please find some photos of my slighly prettier (but still ugly!) app with
 </p>
 
 ### Phase 5 - SetUp Firebase
-In Phase 5, I set up and connected my application to Firebase. To do so, I followed a couple different tutorials including this [tutorial](https://www.instamobile.io/mobile-development/react-native-firebase-storage/) on uploading images to Firebase. In addition, because I needed an authorization mechanism to upload images from the app to Firebase, I followed this other [tutorial](https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/) on implementing sign/login mechanisms to verify a user with Firebase. Admittedly, this led to a lot of restructuring of my App, but ultimately it makes it much more extensible (and I used a few of the styles as well that this tutorial provided).
+In Phase 5, I set up and connected my application to Firebase. To do so, I followed a couple different tutorials including this [tutorial](https://www.instamobile.io/mobile-development/react-native-firebase-storage/) on uploading images to Firebase. In addition, because I needed an authorization mechanism to upload images from the app to Firebase, I followed this other [tutorial](https://blog.logrocket.com/how-to-set-up-email-authentication-with-react-native-react-navigation-and-firebase/) on implementing sign/login mechanisms to verify a user with Firebase. As cited in my source code, I used the code they provided to build out the infrastructure (and modfified as needed for this app), and also used a few of the styles (eg, button format and color, which looked a lot better than my originals) that this tutorial provided. While this did mean doing a  wholesale restructuring of the "infrastructure" (nav, etc.) of my App, it made everything much more extensible and have me an easy way to access firebase authentication components throughout my app -- which is critical for storing and retrieving data and images from Firebase.
 
 Rather than upload a bunch of photos of the app, I recorded the below video of the app running on my phone and uploading a photo to Firebase. 
 
@@ -112,6 +112,7 @@ To close things out, I made a couple of final improvements to my App. First, I a
 
 A short demo of these new features is linked below:
 
+<<<<<<< HEAD
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Improvements_demo.mp4)
 
 ### Final App Walk-through
@@ -119,4 +120,6 @@ So, admittedly I had a lot of fun with this App and wanted to do one final pass 
 
 There's still tons that I could do, but the final walkthrough video below shows how my app ended up.
 
+=======
+>>>>>>> 515196cf4bbca8f41af0dd33d4d2dc9a444d2f69
 [Link to Demo](https://github.com/BUEC500C1/camera-app-whunt1965/blob/main/Photos/Final_demo.mp4)
