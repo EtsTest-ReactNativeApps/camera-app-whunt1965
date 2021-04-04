@@ -32,12 +32,6 @@ export default class Map extends PureComponent {
   componentDidMount(){
     this.getCurrentLocation();
     const user = this.context.user;
-    // this.getMarkers(user).then(()=>{
-    //   this.setState({
-    //     // markers: data,
-    //     loading: false
-    // });
-    // });
     this.getMarkers(user);
     console.log(this.state.markers);
     this.forceUpdate();
